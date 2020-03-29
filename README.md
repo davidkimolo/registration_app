@@ -1,4 +1,4 @@
-# registration_app
+# registration app
 simple registration app 
 
     - Create username
