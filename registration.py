@@ -36,10 +36,6 @@ class Register(tkinter.Tk):
         self.register_button = tkinter.Button(text = "Register", command = self.save_data)
         self.register_button.place(x = 360, y = 493)
 
-        # error_label
-        self.error_message = ""
-
-
     def save_data(self):
         the_username = self.username.get("1.0", tkinter.END)
         the_username = the_username[0:-1]
@@ -49,7 +45,7 @@ class Register(tkinter.Tk):
         the_email = the_email[0:-1]
 
         if (len(the_username) != 0 and len(the_password) != 0 and len(the_email) != 0):
-            if ("@" in the_email):
+            if ("@" in the_email and " " not in the_username):
                 user_info = {}
                 user_info["password"] = the_password
                 user_info["username"] = the_username
@@ -67,9 +63,9 @@ class Register(tkinter.Tk):
                     json.dump(new_user, add_user)
 
             else:
-                self.error_email_label = tkinter.Label(text = "Invalid Email address", bg = "#485065", fg = "orange",
+                self.error_email_label = tkinter.Label(text = "Invalid Email address or Username", bg = "#485065", fg = "orange",
                                                         font = ("times, 12"))
-                self.error_email_label.place(x = 330, y = 550)
+                self.error_email_label.place(x = 280, y = 550)
         else:
             self.error_filed_label = tkinter.Label(text = "please make sure you fill all the fields", bg  = "#485065",
                                                     fg = "orange", font = ("times, 12"))
