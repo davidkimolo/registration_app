@@ -1,5 +1,6 @@
 import tkinter 
 import json 
+import hashlib 
 
 # declarations
 
@@ -36,6 +37,8 @@ class Register(tkinter.Tk):
         self.register_button = tkinter.Button(text = "Register", command = self.save_data)
         self.register_button.place(x = 360, y = 493)
 
+ 
+
     def save_data(self):
         the_username = self.username.get("1.0", tkinter.END)
         the_username = the_username[0:-1]
@@ -47,6 +50,8 @@ class Register(tkinter.Tk):
         if (len(the_username) != 0 and len(the_password) != 0 and len(the_email) != 0):
             if ("@" in the_email and " " not in the_username):
                 user_info = {}
+                #  hash the password 
+                the_password = hashlib.sha256(the_password.encode("UTF-8")).hexdigest()
                 user_info["password"] = the_password
                 user_info["username"] = the_username
                 user_info["email"] = the_email
@@ -61,6 +66,12 @@ class Register(tkinter.Tk):
                     new_user.append(user_info)
                     new_user += the_users
                     json.dump(new_user, add_user)
+
+                    self.success_registration = tkinter.Label(self, text = "Successfully registered",
+                                                            font = ("times, 14"), fg = "white", bg ="#485065")
+                    self.success_registration.place(x = 280, y = 560)
+
+                
 
             else:
                 self.error_email_label = tkinter.Label(text = "Invalid Email address or Username", bg = "#485065", fg = "orange",
