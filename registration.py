@@ -1,5 +1,8 @@
 import tkinter 
 import json 
+
+# declarations
+
 class Register(tkinter.Tk):
     """ Register constructor 
     this is a child class of tkinter """
@@ -9,7 +12,7 @@ class Register(tkinter.Tk):
         self.title("Register app")
         self.geometry("800x600+620+200")
         self.resizable(width = False, height = False)
-
+        self.user_data = "users_data.json"
         # setting the background image on the window
         self.background_image = tkinter.PhotoImage(file = "new.png")
         self.background_label = tkinter.Label(self, image = self.background_image)
@@ -47,7 +50,22 @@ class Register(tkinter.Tk):
 
         if (len(the_username) != 0 and len(the_password) != 0 and len(the_email) != 0):
             if ("@" in the_email):
-                pass 
+                user_info = {}
+                user_info["password"] = the_password
+                user_info["username"] = the_username
+                user_info["email"] = the_email
+
+                # read the existing data
+                with open(self.user_data, "r") as all_users:
+                    the_users = json.load(all_users)
+                
+                # save to file
+                with open (self.user_data, "w") as add_user:
+                    new_user = []
+                    new_user.append(user_info)
+                    new_user += the_users
+                    json.dump(new_user, add_user)
+
             else:
                 self.error_email_label = tkinter.Label(text = "Invalid Email address", bg = "#485065", fg = "orange",
                                                         font = ("times, 12"))

@@ -6,5 +6,7 @@ simple registration app
     - Create Email
     - Create submit button
     - Save Details
+    - Hash passwords
+    - No spaces on usernames
 
 
